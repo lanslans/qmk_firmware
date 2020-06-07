@@ -6,8 +6,7 @@ OPT_DEFS = -DCORTEX_VTOR_INIT=0x2000
 MCU_LDSCRIPT = STM32F103x8_stm32duino_bootloader
 BOARD = STM32_F103_STM32DUINO
 
-DFU_ARGS = -d 1eaf:0003 -a2 -R
-DFU_SUFFIX_ARGS = -v 1eaf -p 0003
+DFU_ARGS = -d 6b62:0000 -R
 
 # project specific files
 VPATH += keyboards/fc980_bluepill/bluepill
