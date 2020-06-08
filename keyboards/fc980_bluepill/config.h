@@ -25,12 +25,16 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #define PRODUCT FC980
 #define DESCRIPTION FC980
 
+//spacebar
+#define BOOTMAGIC_LITE_ROW 2
+#define BOOTMAGIC_LITE_COLUMN 2
+
 /* key matrix size */
 #define MATRIX_ROWS 8
 #define MATRIX_COLS 16
 
-#define MATRIX_COL_PINS { B12, B13, B14, B15, A8, A15, B3, B4, B5, B6, B7, B8, B9, A0, A1, A2}
-#define MATRIX_ROW_PINS { A4, A5, A6, A7, B0, B1, B10, B11}
+#define MATRIX_COL_PINS {A8,B12,B13,B8,B7,A6,B10,A1,A5,B11,B1,B9,A15,B3,B14,B15}
+#define MATRIX_ROW_PINS {A2,B5,B0,B4,A4,B6,A3,A7}
 #define DIODE_DIRECTION ROW2COL
 
 /* define if matrix has ghost */

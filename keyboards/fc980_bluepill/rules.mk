@@ -16,7 +16,7 @@ DFU_SUFFIX_ARGS = -v 1eaf
 VPATH += keyboards/fc980_bluepill/bluepill
 SRC =	keyboard.c
 
-#BOOTMAGIC_ENABLE = yes	# Virtual DIP switch configuration
+BOOTMAGIC_ENABLE = lite	# Virtual DIP switch configuration
 MOUSEKEY_ENABLE = no	# Mouse keys
 EXTRAKEY_ENABLE = yes	# Audio control and System control
 CONSOLE_ENABLE = yes	# Console for debug
