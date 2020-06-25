@@ -10,3 +10,15 @@ https://geekhack.org/index.php?topic=106758.0
 Bootmagic lite enabled, hold spacebar when plugging in to get to bootloader
 
 See the [build environment setup](https://docs.qmk.fm/#/getting_started_build_tools) and the [make instructions](https://docs.qmk.fm/#/getting_started_make_guide) for more information. Brand new to QMK? Start with our [Complete Newbs Guide](https://docs.qmk.fm/#/newbs).
+
+Modifications from stock FC980 behaviour:
+
+FN + up arrow is volume up
+FN + down arrow is volume down
+FN + spacebar is media play/pause
+FN + comma is previous track
+FN + period is next track
+FN + escape is RESET (bootloader)
+
+FN + 1 is default layer (ordinary keyboard)
+FN + 2 turns on layer that has space cadet shift and mod-tap space/ctrl
