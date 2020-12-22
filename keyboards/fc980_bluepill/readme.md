@@ -21,4 +21,14 @@ FN + period is next track
 FN + escape is RESET (bootloader)
 
 FN + 1 is default layer (ordinary keyboard)
-FN + 2 turns on layer that has space cadet shift and mod-tap space/ctrl
+FN + numlock turns on/off space cadet and shift-ctrl
+FN + 2 toggles copy/paste macros on F3/F4
+
+Auto shift enabled (160ms)
+
+Auto shift special keys:
+FN + q is auto shift timeout up
+FN + a is auto shift timeout down
+FN + w is auto report auto shift timeout
+FN + s toggles auto shift
+

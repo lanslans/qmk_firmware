@@ -29,6 +29,11 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #define BOOTMAGIC_LITE_ROW 2
 #define BOOTMAGIC_LITE_COLUMN 2
 
+#define AUTO_SHIFT_TIMEOUT 150
+
+#define TAPPING_TERM 300
+#define IGNORE_MOD_TAP_INTERRUPT
+
 /* key matrix size */
 #define MATRIX_ROWS 8
 #define MATRIX_COLS 16

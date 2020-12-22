@@ -17,6 +17,20 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #include QMK_KEYBOARD_H
 
 
+
+const macro_t *action_get_macro(keyrecord_t *record, uint8_t id, uint8_t opt) {
+    if (record->event.pressed) {
+        switch(id) {
+            case 0:
+                return MACRO( D(LCTL), T(C), U(LCTL), END  );
+            case 1:
+                return MACRO( D(LCTL), T(V), U(LCTL), END  );
+        }
+    }
+    return MACRO_NONE;
+};
+
+
 // Each layer gets a name for readability, which is then used in the keymap matrix below.
 // The underscores don't mean anything - you can have a layer called STUFF or any other name.
 // Layer names don't all need to be of the same length, obviously, and you can also skip them
@@ -24,11 +38,12 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #define _BASE 0
 #define _FN1 1
 #define _FN2 2
+#define _FN3 3
 
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   [_BASE] = LAYOUT_default(
   KC_NO, KC_PGDN, KC_NO, KC_NO, KC_9, KC_7, KC_3, KC_1, KC_F5, KC_2, KC_4, KC_8, KC_0, KC_F10, KC_NO, KC_NO,  \
-  KC_NO, KC_KP_MINUS, KC_DOWN, KC_RCTL, MO(2), KC_N, KC_NO, KC_NO, KC_NO, KC_NO, KC_B, KC_NO, KC_SLASH, KC_F12, KC_RIGHT, KC_LEFT,  \
+  KC_NO, KC_KP_MINUS, KC_DOWN, KC_RCTL, MO(3), KC_N, KC_NO, KC_NO, KC_NO, KC_NO, KC_B, KC_NO, KC_SLASH, KC_F12, KC_RIGHT, KC_LEFT,  \
   KC_NO, KC_KP_DOT, KC_SPACE, KC_LALT, KC_NO, KC_H, KC_F4, KC_ESC, KC_NO, KC_NO, KC_G, KC_F6, KC_QUOTE, KC_F11, KC_P0, KC_UP,  \
   KC_LSHIFT, KC_P6, KC_P4, KC_NO, KC_F7, KC_Y, KC_F3, KC_TAB, KC_LGUI, KC_CAPS, KC_T, KC_RBRACKET, KC_LBRACKET, KC_BSPACE, KC_P5, KC_NO,  \
   KC_NO, KC_P9, KC_P7, KC_NO, KC_O, KC_U, KC_E, KC_Q, KC_NO, KC_W, KC_R, KC_I, KC_P, KC_NO, KC_P8, KC_KP_PLUS,  \
@@ -36,25 +51,35 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   KC_NO, KC_KP_ASTERISK, KC_NLCK, KC_NO, KC_DOT, KC_M, KC_C, KC_Z, KC_RALT, KC_X, KC_V, KC_COMMA, KC_NO, KC_ENTER, KC_KP_SLASH, KC_NO,  \
   KC_NO, KC_PGUP, KC_DEL, KC_NO, KC_F8, KC_6, KC_F2, KC_GRAVE, KC_LCTRL, KC_F1, KC_5, KC_EQUAL, KC_MINUS, KC_F9, KC_INS, KC_NO), 
 
-  [_FN2] = LAYOUT_default(
-  RESET, KC_END, KC_NO, KC_NO, KC_9, KC_7, KC_3, DF(0), KC_F5, DF(2), KC_4, KC_8, KC_0, KC_F10, KC_NO, KC_NO,  \
-  KC_NO, KC_KP_MINUS, KC_VOLD, KC_APP, MO(2), KC_N, KC_NO, KC_NO, KC_NO, KC_NO, KC_B, KC_NO, KC_SLASH, KC_F12, KC_END, KC_HOME,  \
+  [_FN3] = LAYOUT_default( //function key pressed
+  RESET, KC_END, KC_NO, KC_NO, KC_9, KC_7, KC_3, DF(0), KC_F5, TG(_FN2), KC_4, KC_8, KC_0, KC_F10, KC_NO, KC_NO,  \
+  KC_NO, KC_KP_MINUS, KC_VOLD, KC_APP, MO(3), KC_N, KC_NO, KC_NO, KC_NO, KC_NO, KC_B, KC_NO, KC_SLASH, KC_F12, KC_END, KC_HOME,  \
   KC_NO, KC_KP_DOT, KC_SPACE, KC_LALT, KC_NO, KC_H, KC_F4, KC_ESC, KC_NO, KC_NO, KC_G, KC_F6, KC_QUOTE, KC_F11, KC_P0, KC_VOLU,  \
   KC_LSHIFT, KC_P6, KC_P4, KC_NO, KC_F7, KC_Y, KC_F3, KC_TAB, KC_LGUI, KC_CAPS, KC_T, KC_RBRACKET, KC_LBRACKET, KC_BSPACE, KC_P5, KC_NO,  \
-  KC_NO, KC_P9, KC_P7, KC_NO, KC_SCROLLLOCK, KC_U, KC_E, KC_Q, KC_NO, KC_W, KC_R, KC_PSCREEN, KC_PAUSE, KC_NO, KC_P8, KC_KP_PLUS,  \
-  KC_RSHIFT, KC_P3, KC_P1, KC_NO, KC_L, KC_J, KC_D, KC_A, KC_NO, KC_S, KC_F, KC_K, KC_SCOLON, KC_BSLASH, KC_P2, KC_KP_ENTER,  \
+  KC_NO, KC_P9, KC_P7, KC_NO, KC_SCROLLLOCK, KC_U, KC_E, KC_ASUP, KC_NO, KC_ASRP, KC_R, KC_PSCREEN, KC_PAUSE, KC_NO, KC_P8, KC_KP_PLUS,  \
+  KC_RSHIFT, KC_P3, KC_P1, KC_NO, KC_L, KC_J, KC_D, KC_ASDN, KC_NO, KC_ASTG, KC_F, KC_K, KC_SCOLON, KC_BSLASH, KC_P2, KC_KP_ENTER,  \
   KC_NO, KC_KP_ASTERISK, TG(_FN1), KC_NO, KC_MEDIA_NEXT_TRACK, KC_M, KC_C, KC_Z, KC_RALT, KC_X, KC_V, KC_MEDIA_PREV_TRACK, KC_NO, KC_ENTER, KC_KP_SLASH, KC_NO,  \
   KC_NO, KC_HOME, KC_DEL, KC_NO, KC_F8, KC_6, KC_F2, KC_GRAVE, KC_LCTRL, KC_F1, KC_5, KC_EQUAL, KC_MINUS, KC_F9, KC_INS, KC_NO), 
 
-  [_FN1] = LAYOUT_default(
+  [_FN1] = LAYOUT_default( //fn+numlock - space cadet shift
   KC_NO, KC_PGDN, KC_NO, KC_NO, KC_9, KC_7, KC_3, KC_1, KC_F5, KC_2, KC_4, KC_8, KC_0, KC_F10, KC_NO, KC_NO,  \
-  KC_NO, KC_KP_MINUS, KC_DOWN, KC_RCTL, MO(2), KC_N, KC_NO, KC_NO, KC_NO, KC_NO, KC_B, KC_NO, KC_SLASH, KC_F12, KC_RIGHT, KC_LEFT,  \
-  KC_NO, KC_KP_DOT, KC_SPACE, KC_LALT, KC_NO, KC_H, KC_F4, KC_ESC, KC_NO, KC_NO, KC_G, KC_F6, KC_QUOTE, KC_F11, KC_P0, KC_UP,  \
+  KC_NO, KC_KP_MINUS, KC_DOWN, KC_RCTL, MO(3), KC_N, KC_NO, KC_NO, KC_NO, KC_NO, KC_B, KC_NO, KC_SLASH, KC_F12, KC_RIGHT, KC_LEFT,  \
+  KC_NO, KC_KP_DOT, RCTL_T(KC_SPACE), KC_LALT, KC_NO, KC_H, KC_F4, KC_ESC, KC_NO, KC_NO, KC_G, KC_F6, KC_QUOTE, KC_F11, KC_P0, KC_UP,  \
   KC_LSPO, KC_P6, KC_P4, KC_NO, KC_F7, KC_Y, KC_F3, KC_TAB, KC_LGUI, KC_CAPS, KC_T, KC_RBRACKET, KC_LBRACKET, KC_BSPACE, KC_P5, KC_NO,  \
   KC_NO, KC_P9, KC_P7, KC_NO, KC_O, KC_U, KC_E, KC_Q, KC_NO, KC_W, KC_R, KC_I, KC_P, KC_NO, KC_P8, KC_KP_PLUS,  \
   KC_RSPC, KC_P3, KC_P1, KC_NO, KC_L, KC_J, KC_D, KC_A, KC_NO, KC_S, KC_F, KC_K, KC_SCOLON, KC_BSLASH, KC_P2, KC_KP_ENTER,  \
   KC_NO, KC_KP_ASTERISK, KC_NLCK, KC_NO, KC_DOT, KC_M, KC_C, KC_Z, KC_RALT, KC_X, KC_V, KC_COMMA, KC_NO, KC_ENTER, KC_KP_SLASH, KC_NO,  \
   KC_NO, KC_PGUP, KC_DEL, KC_NO, KC_F8, KC_6, KC_F2, KC_GRAVE, KC_LCTRL, KC_F1, KC_5, KC_EQUAL, KC_MINUS, KC_F9, KC_INS, KC_NO), 
+
+    [_FN2] = LAYOUT_default( //fn+2 - F3/F4 copy/paste
+  KC_NO, KC_PGDN, KC_NO, KC_NO, KC_9, KC_7, KC_3, KC_1, KC_F5, KC_2, KC_4, KC_8, KC_0, KC_F10, KC_NO, KC_NO,  \
+  KC_NO, KC_KP_MINUS, KC_DOWN, KC_RCTL, MO(3), KC_N, KC_NO, KC_NO, KC_NO, KC_NO, KC_B, KC_NO, KC_SLASH, KC_F12, KC_RIGHT, KC_LEFT,  \
+  KC_NO, KC_KP_DOT, KC_SPACE, KC_LALT, KC_NO, KC_H, M(1), KC_ESC, KC_NO, KC_NO, KC_G, KC_F6, KC_QUOTE, KC_F11, KC_P0, KC_UP,  \
+  KC_TRNS, KC_P6, KC_P4, KC_NO, KC_F7, KC_Y, M(0), KC_TAB, KC_LGUI, KC_CAPS, KC_T, KC_RBRACKET, KC_LBRACKET, KC_BSPACE, KC_P5, KC_NO,  \
+  KC_NO, KC_P9, KC_P7, KC_NO, KC_O, KC_U, KC_E, KC_Q, KC_NO, KC_W, KC_R, KC_I, KC_P, KC_NO, KC_P8, KC_KP_PLUS,  \
+  KC_TRNS, KC_P3, KC_P1, KC_NO, KC_L, KC_J, KC_D, KC_A, KC_NO, KC_S, KC_F, KC_K, KC_SCOLON, KC_BSLASH, KC_P2, KC_KP_ENTER,  \
+  KC_NO, KC_KP_ASTERISK, KC_NLCK, KC_NO, KC_DOT, KC_M, KC_C, KC_Z, KC_RALT, KC_X, KC_V, KC_COMMA, KC_NO, KC_ENTER, KC_KP_SLASH, KC_NO,  \
+  KC_NO, KC_PGUP, KC_DEL, KC_NO, KC_F8, KC_6, KC_F2, KC_GRAVE, KC_LCTRL, KC_F1, KC_5, KC_EQUAL, KC_MINUS, KC_F9, KC_INS, KC_NO),  
 };
 
 
